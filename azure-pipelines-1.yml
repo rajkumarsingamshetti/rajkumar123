@@ -16,14 +16,13 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'clean package'
 
-# 👉 NEW STEP: rename WAR to ROOT
 - script: |
-    mv target/*.war target/ROOT.war
+    find . -name "*.war" -exec mv {} ROOT.war \;
   displayName: Rename WAR to ROOT
 
 - task: CopyFiles@2
   inputs:
-    Contents: 'target/ROOT.war'
+    Contents: 'ROOT.war'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1
@@ -31,3 +30,4 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'warfile'
     publishLocation: 'Container'
+
