@@ -14,11 +14,11 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+    goals: 'clean package'   # 👈 added clean
 
 - task: CopyFiles@2
   inputs:
-    Contents: '**/*.war'
+    Contents: '**/target/*.war'   # 👈 ONLY change needed
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1
