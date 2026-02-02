@@ -14,11 +14,16 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'clean package'   # 👈 added clean
+    goals: 'clean package'
+
+# 👉 NEW STEP: rename WAR to ROOT
+- script: |
+    mv target/*.war target/ROOT.war
+  displayName: Rename WAR to ROOT
 
 - task: CopyFiles@2
   inputs:
-    Contents: '**/target/*.war'   # 👈 ONLY change needed
+    Contents: 'target/ROOT.war'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1
